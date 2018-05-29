@@ -1,0 +1,6 @@
+out/*
+*.js.map
+node_modules/
+*.log
+.settings/
+*.db*

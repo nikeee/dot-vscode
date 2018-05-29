@@ -1,0 +1,138 @@
+{
+  "name": "dot-vscode",
+  "description": "VSCode part of a language server",
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "version": "0.0.1",
+  "repository": "https://github.com/nikeee/dot-vscode",
+  "private": true,
+  "publisher": "nikeee",
+  "displayName": "TODO",
+  "main": "./out/src/extension",
+  "engines": {
+    "vscode": "^1.16.0"
+  },
+  "categories": [
+    "Snippets",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "DOT",
+    "Graphviz",
+    "gv"
+  ],
+  "activationEvents": [
+    "onLanguage:dot"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "dot",
+        "mimetypes": [
+          "text/vnd.graphviz"
+        ],
+        "aliases": [
+          "Graphviz (DOT)",
+          "DOT"
+        ],
+        "extensions": [
+          ".dot",
+          ".gv",
+          ".DOT"
+        ],
+        "configuration": "language/dot/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dot",
+        "scopeName": "source.dot",
+        "path": "language/dot/dot.tmLanguage"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "dot",
+        "path": "language/dot/snippets.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Graphviz Configuration",
+      "properties": {
+        "Graphviz.runInterval": {
+          "type": "number",
+          "default": 1000,
+          "description": "Control how often we will be checking for file changes"
+        },
+        "dotLanguageServer.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "dotLanguageServer.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VSCode and the language server."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "graphviz.preview",
+        "key": "ctrl+shift+v",
+        "mac": "shift+cmd+v",
+        "when": "editorTextFocus && editorLangId == dot"
+      },
+      {
+        "command": "graphviz.previewToSide",
+        "key": "ctrl+k v",
+        "mac": "cmd+k shift+v",
+        "when": "editorTextFocus && editorLangId == dot"
+      }
+    ],
+    "commands": [
+      {
+        "command": "graphviz.preview",
+        "title": "Toggle Preview",
+        "category": "Graphviz"
+      },
+      {
+        "command": "graphviz.previewToSide",
+        "title": "Open Preview to the Side",
+        "category": "Graphviz"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "graphviz.previewToSide",
+          "when": "resourceLangId == dot"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "update-vscode": "node ./node_modules/vscode/bin/install",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "dependencies": {
+    "vscode": "^1.1.5",
+    "vscode-languageclient": "^4.1.4",
+    "viz.js": "^1.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.1.1",
+    "typescript": "^2.8.3"
+  }
+}
