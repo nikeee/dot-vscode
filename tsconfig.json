@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
+		"noUnusedLocals": false, // TODO: Fix
+		"noUnusedParameters": false, // TODO: Fix
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"target": "es6",
