@@ -1,14 +1,20 @@
 {
-	"compilerOptions": {
-		"noUnusedLocals": false, // TODO: Fix
-		"noUnusedParameters": false, // TODO: Fix
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
-		"target": "es6",
-		"module": "commonjs",
-		"rootDir": ".",
-		"outDir": "out",
-		"lib": [ "es2016" ],
-		"sourceMap": true
-	}
+  "compilerOptions": {
+    "strict": false, // TODO: Fix
+    "noUnusedLocals": false, // TODO: Fix
+    "noUnusedParameters": false, // TODO: Fix
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+
+    "skipLibCheck": true, // the definitions of vscode-languageclient have errors in them, skip this
+
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": ".",
+    "outDir": "out",
+    "lib": [
+      "es2016"
+    ],
+    "sourceMap": true
+  }
 }
