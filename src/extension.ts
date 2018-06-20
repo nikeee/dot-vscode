@@ -1,8 +1,18 @@
-import { window, workspace, ExtensionContext, Disposable, TextDocumentChangeEvent, ViewColumn, TextDocument, TextEditorSelectionChangeEvent, commands } from "vscode";
+import {
+	window,
+	workspace,
+	ExtensionContext,
+	Disposable,
+	TextDocumentChangeEvent,
+	ViewColumn,
+	TextDocument,
+	TextEditorSelectionChangeEvent,
+	commands
+} from "vscode";
+
 import {
 	LanguageClient,
 	LanguageClientOptions,
-	ServerOptions /* TransportKind */
 } from "vscode-languageclient";
 
 import * as gvp from "./GraphvizProvider";
@@ -17,16 +27,14 @@ export function activate(context: ExtensionContext) {
 }
 
 function createLanguageClient() {
-	// The debug options for the server
-	// const debugOptions = { execArgv: ["--nolazy", "--inspect=6009"] };
+	const serverOptions = {
+		command: "dot-language-server",
+		args: ["--stdio"],
 
-	// If the extension is launched in debug mode then the debug server options are used
-	// Otherwise the run options are used
-	const serverOptions: ServerOptions = {
-		run: { command: "dot-language-server", args: ["--stdio"] },
-		debug: { command: "dot-language-server", args: ["--stdio"] },
+		// Type assertion because of unreleased patch
+		// https://github.com/Microsoft/vscode-languageserver-node/issues/358
+		options: { shell: true } as any
 	};
-	// { module: serverModule, transport: TransportKind.ipc, options: debugOptions },
 
 	// Options to control the language client
 	const clientOptions: LanguageClientOptions = {
@@ -43,7 +51,7 @@ function createLanguageClient() {
 		"dotLanguageServer",
 		"DOT Language Server",
 		serverOptions,
-		clientOptions
+		clientOptions,
 	);
 }
 
@@ -53,7 +61,10 @@ function createLanguageClient() {
 function createGraphvizProviders() {
 	const provider = new gvp.GraphvizProvider();
 	const providerRegistrations = Disposable.from(
-		workspace.registerTextDocumentContentProvider(gvp.GraphvizProvider.scheme, provider)
+		workspace.registerTextDocumentContentProvider(
+			gvp.GraphvizProvider.scheme,
+			provider
+		)
 	);
 
 	// When the active document is changed set the provider for rebuild
@@ -65,11 +76,17 @@ function createGraphvizProviders() {
 	});
 
 	// This occurs whenever the selected document changes, its useful to keep the
-	window.onDidChangeTextEditorSelection((e: TextEditorSelectionChangeEvent) => {
-		if (!!e && !!e.textEditor && (e.textEditor === window.activeTextEditor)) {
-			provider.setNeedsRebuild(true);
-		};
-	})
+	window.onDidChangeTextEditorSelection(
+		(e: TextEditorSelectionChangeEvent) => {
+			if (
+				!!e &&
+				!!e.textEditor &&
+				e.textEditor === window.activeTextEditor
+			) {
+				provider.setNeedsRebuild(true);
+			}
+		}
+	);
 
 	workspace.onDidSaveTextDocument((e: TextDocument) => {
 		if (e === window.activeTextEditor.document) {
@@ -77,13 +94,21 @@ function createGraphvizProviders() {
 		}
 	});
 
-	const previewToSide = commands.registerCommand("graphviz.previewToSide", () => {
-		const displayColumn = getDisplayColumn(window.activeTextEditor.viewColumn);
-		return gvp.createHTMLWindow(provider, displayColumn);
-	});
+	const previewToSide = commands.registerCommand(
+		"graphviz.previewToSide",
+		() => {
+			const displayColumn = getDisplayColumn(
+				window.activeTextEditor.viewColumn
+			);
+			return gvp.createHTMLWindow(provider, displayColumn);
+		}
+	);
 
 	const preview = commands.registerCommand("graphviz.preview", () => {
-		return gvp.createHTMLWindow(provider, window.activeTextEditor.viewColumn);
+		return gvp.createHTMLWindow(
+			provider,
+			window.activeTextEditor.viewColumn
+		);
 	});
 
 	return [previewToSide, preview, providerRegistrations];
