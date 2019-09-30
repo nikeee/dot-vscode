@@ -128,12 +128,12 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "dependencies": {
-    "vscode": "^1.1.18",
-    "vscode-languageclient": "^4.2.1",
+    "vscode": "^1.1.36",
+    "vscode-languageclient": "^5.2.1",
     "viz.js": "^1.8.1"
   },
   "devDependencies": {
-    "@types/node": "^10.3.4",
-    "typescript": "^2.9.2"
+    "@types/node": "^12.7.8",
+    "typescript": "^3.6.3"
   }
 }
