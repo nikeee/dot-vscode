@@ -123,15 +123,14 @@
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -p ./",
     "watch": "tsc -w -p ./",
-    "test": "tsc -p ./ --noEmit",
-    "update-vscode": "node ./node_modules/vscode/bin/install",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "test": "tsc -p ./ --noEmit"
   },
   "dependencies": {
     "vscode-languageclient": "^5.2.1",
     "viz.js": "^1.8.2"
   },
   "devDependencies": {
+    "@types/vscode": "^1.16.0",
     "@types/node": "^13.13.4",
     "typescript": "^3.8.3"
   }
