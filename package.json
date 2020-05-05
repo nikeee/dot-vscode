@@ -128,7 +128,6 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "dependencies": {
-    "vscode": "^1.1.37",
     "vscode-languageclient": "^5.2.1",
     "viz.js": "^1.8.2"
   },
